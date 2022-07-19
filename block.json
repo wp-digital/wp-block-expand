@@ -1,0 +1,15 @@
+{
+  "apiVersion": 2,
+  "name": "innocode/block-expand",
+  "version": "1.0.0",
+  "title": "Expandable",
+  "category": "design",
+  "description": "Short text with simple CTA to see full text.",
+  "supports": {
+	"html": false
+  },
+  "textdomain": "innocode-blocks",
+  "editorScript": "file:./build/index.js",
+  "editorStyle": "file:./build/index.css",
+  "style": "file:./build/style-index.css"
+}
