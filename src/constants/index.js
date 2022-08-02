@@ -18,7 +18,11 @@ export const BUTTON_TEXT_LESS_DEFAULT = applyFilters(
 	'Show less'
 );
 
-export const SHRINKED_HEIGHT_DEFAULT = applyFilters(
+export const HAS_FADEOUT_DEFAULT = applyFilters(
+	'innocode.block-expand.has_fadeout.default',
+	false
+);
+export const FADEOUT_HEIGHT_DEFAULT = applyFilters(
 	'innocode.block-expand.height.default',
-	220
+	60
 );
