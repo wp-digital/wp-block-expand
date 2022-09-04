@@ -27,6 +27,8 @@ import {
 	ALLOWED_BLOCKS,
 } from './constants/editor';
 
+import './editor.scss';
+
 export default function Edit({
 	attributes,
 	setAttributes,
@@ -51,7 +53,8 @@ export default function Edit({
 	const onButtonMoreTextChange = (value) => onChange('buttonMoreText', value);
 	const onButtonLessTextChange = (value) => onChange('buttonLessText', value);
 	const onHasFadeoutChange = () => onChange('hasFadeout', !hasFadeout);
-	const onFadeoutHeightChange = (value) => onChange('fadeoutHeight', value);
+	const onFadeoutHeightChange = (value) =>
+		onChange('fadeoutHeight', parseInt(value, 10));
 
 	const isParentOfSelectedBlock = useSelect(
 		(select) =>
