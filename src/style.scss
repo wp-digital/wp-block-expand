@@ -1,72 +1,47 @@
-/* stylelint-disable selector-class-pattern */
 .innocode-block-expand {
+	$self: &;
 
-	&__before-text,
-	&__after-text {
+	&_has-fadeout {
 
-		p {
-			margin: 0 0 20px;
-		}
-	}
-
-	&__before-text {
-
-		&.faded {
+		#{$self}__intro {
 			mask-image: linear-gradient(180deg, #000 calc(100% - var(--fadeout-height)), rgba(255, 255, 255, 0));
+		}
 
-			.expanded & {
+		&#{$self}_is-opened {
+
+			#{$self}__intro {
 				mask-image: none;
 			}
 		}
 	}
 
-	&__after-text {
-		display: none;
+	&_is-opened {
 
-		.expanded & {
-			display: block;
-		}
-	}
-
-	& &__button {
-		display: inline-block;
-		border: none;
-		outline: none;
-		font-size: 16px;
-		font-weight: 500;
-
-		&_button {
-			min-width: 140px;
-			min-height: 60px;
-			padding: 10px 25px;
-			background: #7ea7ac;
-			color: #fff;
-		}
-
-		&_link {
-			padding: 5px 0;
-			background: none !important;
-			color: #7ea7ac !important;
-			text-decoration: underline;
-
-			&:hover {
-				text-decoration: none;
-			}
-		}
-	}
-
-	&__less {
-		display: none;
-	}
-
-	&.expanded {
-
-		.innocode-block-expand__more {
+		#{$self}__button_more {
 			display: none;
 		}
+	}
 
-		.innocode-block-expand__less {
-			display: inline;
+	&_is-closed {
+
+		#{$self}__content,
+		#{$self}__button_less {
+			display: none;
+		}
+	}
+
+	&__button {
+		cursor: pointer;
+
+		&_link {
+			background: none;
+			border: none;
+			color: inherit;
+			font-size: 1em;
+			padding: 0;
+			text-decoration: underline;
+			text-decoration-thickness: 1px;
+			text-underline-offset: 0.25ch;
 		}
 	}
 }

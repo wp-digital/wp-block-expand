@@ -2,6 +2,7 @@ import {
 	useBlockProps,
 	InspectorControls,
 	RichText,
+	InnerBlocks,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -11,28 +12,32 @@ import {
 	/* eslint-disable-next-line @wordpress/no-unsafe-wp-apis */
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
+import { BLOCK_CLASS_NAME } from './constants';
 import {
-	BLOCK_CLASS_NAME,
-	BUTTON_TEXT_LESS_DEFAULT,
-	BUTTON_TEXT_MORE_DEFAULT,
 	BUTTON_TYPE_BUTTON,
-	BUTTON_TYPE_DEFAULT,
 	BUTTON_TYPE_LINK,
-	FADEOUT_HEIGHT_DEFAULT,
+	BUTTON_TYPE_DEFAULT,
+	BUTTON_MORE_TEXT_DEFAULT,
+	BUTTON_LESS_TEXT_DEFAULT,
 	HAS_FADEOUT_DEFAULT,
-} from './constants';
+	FADEOUT_HEIGHT_DEFAULT,
+	ALLOWED_BLOCKS,
+} from './constants/editor';
 
-import './editor.scss';
-
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({
+	attributes,
+	setAttributes,
+	clientId,
+	isSelected,
+}) {
 	const {
-		moreButtonText = BUTTON_TEXT_MORE_DEFAULT,
-		lessButtonText = BUTTON_TEXT_LESS_DEFAULT,
+		intro,
 		buttonType = BUTTON_TYPE_DEFAULT,
-		beforeText,
-		afterText,
+		buttonMoreText = BUTTON_MORE_TEXT_DEFAULT,
+		buttonLessText = BUTTON_LESS_TEXT_DEFAULT,
 		hasFadeout = HAS_FADEOUT_DEFAULT,
 		fadeoutHeight = FADEOUT_HEIGHT_DEFAULT,
 	} = attributes;
@@ -41,36 +46,43 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ [key]: value });
 	};
 
+	const onIntroChange = (value) => onChange('intro', value);
 	const onButtonTypeChange = (value) => onChange('buttonType', value);
-	const onMoreButtonTextChange = (value) => onChange('moreButtonText', value);
-	const onLessButtonTextChange = (value) => onChange('lessButtonText', value);
-	const onHeightChange = (value) => onChange('fadeoutHeight', value);
-	const onBeforeTextChange = (value) => onChange('beforeText', value);
-	const onAfterTextChange = (value) => onChange('afterText', value);
-	const onHasFadeoutChange = (value) => onChange('hasFadeout', value);
+	const onButtonMoreTextChange = (value) => onChange('buttonMoreText', value);
+	const onButtonLessTextChange = (value) => onChange('buttonLessText', value);
+	const onHasFadeoutChange = () => onChange('hasFadeout', !hasFadeout);
+	const onFadeoutHeightChange = (value) => onChange('fadeoutHeight', value);
+
+	const isParentOfSelectedBlock = useSelect(
+		(select) =>
+			select('core/block-editor').hasSelectedInnerBlock(clientId, true),
+		[]
+	);
+	const isOpened = isSelected || isParentOfSelectedBlock;
+
+	let className = `${BLOCK_CLASS_NAME} ${BLOCK_CLASS_NAME}_is-${
+		isOpened ? 'opened' : 'closed'
+	}`;
+
+	if (hasFadeout) {
+		className += ` ${BLOCK_CLASS_NAME}_has-fadeout`;
+	}
 
 	return (
-		<div
-			{...useBlockProps({
-				className: BLOCK_CLASS_NAME,
-			})}
-		>
+		<div {...useBlockProps({ className })}>
 			<InspectorControls>
-				<PanelBody title={__('Settings', 'innocode-block-expand')}>
+				<PanelBody title={__('Settings', 'innocode-blocks')}>
 					<PanelRow>
 						<RadioControl
-							label={__('Button type', 'innocode-block-expand')}
+							label={__('Button type', 'innocode-blocks')}
 							selected={buttonType}
 							options={[
 								{
-									label: __('Link', 'innocode-block-expand'),
+									label: __('Link', 'innocode-blocks'),
 									value: BUTTON_TYPE_LINK,
 								},
 								{
-									label: __(
-										'Button',
-										'innocode-block-expand'
-									),
+									label: __('Button', 'innocode-blocks'),
 									value: BUTTON_TYPE_BUTTON,
 								},
 							]}
@@ -79,7 +91,7 @@ export default function Edit({ attributes, setAttributes }) {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Text fadeout', 'innocode-block-expand')}
+							label={__('Use fadeout effect', 'innocode-blocks')}
 							checked={hasFadeout}
 							onChange={onHasFadeoutChange}
 						/>
@@ -87,48 +99,46 @@ export default function Edit({ attributes, setAttributes }) {
 					{hasFadeout && (
 						<PanelRow>
 							<NumberControl
-								label="Fadeout height"
+								label={__('Fadeout height', 'innocode-blocks')}
 								value={fadeoutHeight}
-								onChange={onHeightChange}
+								onChange={onFadeoutHeightChange}
 							/>
 						</PanelRow>
 					)}
 				</PanelBody>
 			</InspectorControls>
-
 			<RichText
 				tagName="div"
 				multiline="p"
-				value={beforeText}
-				placeholder={__('Intro text', 'innocode-block-expand')}
-				onChange={onBeforeTextChange}
-				className={`${BLOCK_CLASS_NAME}__before-text${
-					hasFadeout ? ' faded' : ''
-				}`}
+				value={intro}
+				placeholder={__('Intro', 'innocode-blocks')}
+				onChange={onIntroChange}
+				className={`${BLOCK_CLASS_NAME}__intro`}
 				style={{ '--fadeout-height': `${fadeoutHeight}px` }}
 			/>
-			<RichText
-				tagName="button"
-				allowedFormats={[]}
-				value={moreButtonText}
-				onChange={onMoreButtonTextChange}
-				className={`${BLOCK_CLASS_NAME}__button ${BLOCK_CLASS_NAME}__button_${buttonType}`}
-			/>
-			<RichText
-				tagName="div"
-				multiline="p"
-				value={afterText}
-				placeholder={__('Additional text', 'innocode-block-expand')}
-				onChange={onAfterTextChange}
-				className={`${BLOCK_CLASS_NAME}__after-text`}
-			/>
-			<RichText
-				tagName="button"
-				allowedFormats={[]}
-				value={lessButtonText}
-				onChange={onLessButtonTextChange}
-				className={`${BLOCK_CLASS_NAME}__button ${BLOCK_CLASS_NAME}__button_${buttonType}`}
-			/>
+			<div className={`${BLOCK_CLASS_NAME}__main`}>
+				<RichText
+					tagName="button"
+					allowedFormats={[]}
+					value={buttonMoreText}
+					onChange={onButtonMoreTextChange}
+					className={`${BLOCK_CLASS_NAME}__button ${BLOCK_CLASS_NAME}__button_more ${BLOCK_CLASS_NAME}__button_${buttonType}`}
+				/>
+				{isOpened && (
+					<>
+						<div className={`${BLOCK_CLASS_NAME}__content`}>
+							<InnerBlocks allowedBlocks={ALLOWED_BLOCKS} />
+						</div>
+						<RichText
+							tagName="button"
+							allowedFormats={[]}
+							value={buttonLessText}
+							onChange={onButtonLessTextChange}
+							className={`${BLOCK_CLASS_NAME}__button ${BLOCK_CLASS_NAME}__button_less ${BLOCK_CLASS_NAME}__button_${buttonType}`}
+						/>
+					</>
+				)}
+			</div>
 		</div>
 	);
 }

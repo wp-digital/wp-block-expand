@@ -1,32 +1,36 @@
+import { BLOCK_CLASS_NAME } from './constants';
 import {
-	BUTTON_TEXT_LESS_DEFAULT,
-	BUTTON_TEXT_MORE_DEFAULT,
 	BUTTON_TYPE_BUTTON,
-	BUTTON_TYPE_DEFAULT,
 	BUTTON_TYPE_LINK,
-	FADEOUT_HEIGHT_DEFAULT,
+	BUTTON_TYPE_DEFAULT,
+	BUTTON_MORE_TEXT_DEFAULT,
+	BUTTON_LESS_TEXT_DEFAULT,
 	HAS_FADEOUT_DEFAULT,
-} from './constants';
+	FADEOUT_HEIGHT_DEFAULT,
+} from './constants/editor';
 
 export default {
-	moreButtonText: {
+	intro: {
 		type: 'string',
-		default: BUTTON_TEXT_MORE_DEFAULT,
-	},
-	lessButtonText: {
-		type: 'string',
-		default: BUTTON_TEXT_LESS_DEFAULT,
-	},
-	beforeText: {
-		type: 'string',
-	},
-	afterText: {
-		type: 'string',
+		source: 'html',
+		selector: `.${BLOCK_CLASS_NAME}__intro`,
 	},
 	buttonType: {
 		type: 'string',
 		default: BUTTON_TYPE_DEFAULT,
 		enum: [BUTTON_TYPE_LINK, BUTTON_TYPE_BUTTON],
+	},
+	buttonMoreText: {
+		type: 'string',
+		default: BUTTON_MORE_TEXT_DEFAULT,
+		source: 'html',
+		selector: `.${BLOCK_CLASS_NAME}__button_more`,
+	},
+	buttonLessText: {
+		type: 'string',
+		default: BUTTON_LESS_TEXT_DEFAULT,
+		source: 'html',
+		selector: `.${BLOCK_CLASS_NAME}__button_less`,
 	},
 	hasFadeout: {
 		type: 'boolean',

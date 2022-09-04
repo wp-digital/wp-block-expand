@@ -2,20 +2,24 @@ import domReady from '@wordpress/dom-ready';
 
 import { BLOCK_CLASS_NAME } from './constants';
 
-const BUTTON_CLASS_NAME = `${BLOCK_CLASS_NAME}__button`;
-
 const onButtonClick = (event) => {
-	const block = event.currentTarget.closest(`.${BLOCK_CLASS_NAME}`);
+	const content = event.currentTarget.closest(`.${BLOCK_CLASS_NAME}`);
 
-	if (block) {
-		block.classList.toggle('expanded');
+	if (content) {
+		content.classList.toggle(`${BLOCK_CLASS_NAME}_is-opened`);
+		content.classList.toggle(`${BLOCK_CLASS_NAME}_is-closed`);
 	}
 };
 
+const handler = (button) => {
+	button.addEventListener('click', onButtonClick);
+};
+
 const onReady = () => {
-	document.querySelectorAll(`.${BUTTON_CLASS_NAME}`).forEach((button) => {
-		button.addEventListener('click', onButtonClick);
-	});
+	[].map.call(
+		document.querySelectorAll(`.${BLOCK_CLASS_NAME}__button`),
+		handler
+	);
 };
 
 domReady(onReady);

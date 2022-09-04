@@ -1,60 +1,57 @@
-import { RichText, useBlockProps } from '@wordpress/block-editor';
+import { RichText, useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 
+import { BLOCK_CLASS_NAME } from './constants';
 import {
-	BLOCK_CLASS_NAME,
-	BUTTON_TEXT_LESS_DEFAULT,
-	BUTTON_TEXT_MORE_DEFAULT,
 	BUTTON_TYPE_DEFAULT,
+	BUTTON_MORE_TEXT_DEFAULT,
+	BUTTON_LESS_TEXT_DEFAULT,
 	HAS_FADEOUT_DEFAULT,
 	FADEOUT_HEIGHT_DEFAULT,
-} from './constants';
-// import { ALLOWED_BLOCKS } from './constants/editor';
+	ALLOWED_BLOCKS,
+} from './constants/editor';
 
 export default function save({ attributes }) {
 	const {
-		moreButtonText = BUTTON_TEXT_MORE_DEFAULT,
-		lessButtonText = BUTTON_TEXT_LESS_DEFAULT,
+		intro,
 		buttonType = BUTTON_TYPE_DEFAULT,
-		beforeText,
-		afterText,
+		buttonMoreText = BUTTON_MORE_TEXT_DEFAULT,
+		buttonLessText = BUTTON_LESS_TEXT_DEFAULT,
 		hasFadeout = HAS_FADEOUT_DEFAULT,
 		fadeoutHeight = FADEOUT_HEIGHT_DEFAULT,
 	} = attributes;
 
+	let className = `${BLOCK_CLASS_NAME} ${BLOCK_CLASS_NAME}_is-closed`;
+
+	if (hasFadeout) {
+		className += ` ${BLOCK_CLASS_NAME}_has-fadeout`;
+	}
+
 	return (
-		<div
-			{...useBlockProps.save({
-				className: BLOCK_CLASS_NAME,
-			})}
-		>
-			<div className={`${BLOCK_CLASS_NAME}__content`}>
-				<RichText.Content
-					tagName="div"
-					multiline="p"
-					value={beforeText}
-					className={`${BLOCK_CLASS_NAME}__before-text${
-						hasFadeout ? ' faded' : ''
-					}`}
-					style={{ '--fadeout-height': `${fadeoutHeight}px` }}
-				/>
-				<RichText.Content
-					tagName="div"
-					multiline="p"
-					value={afterText}
-					className={`${BLOCK_CLASS_NAME}__after-text`}
-				/>
+		<div {...useBlockProps.save({ className })}>
+			<RichText.Content
+				tagName="div"
+				multiline="p"
+				value={intro}
+				className={`${BLOCK_CLASS_NAME}__intro`}
+				style={{ '--fadeout-height': `${fadeoutHeight}px` }}
+			/>
+			<div className={`${BLOCK_CLASS_NAME}__main`}>
+				<button
+					type="button"
+					className={`${BLOCK_CLASS_NAME}__button ${BLOCK_CLASS_NAME}__button_more ${BLOCK_CLASS_NAME}__button_${buttonType}`}
+				>
+					{buttonMoreText}
+				</button>
+				<div className={`${BLOCK_CLASS_NAME}__content`}>
+					<InnerBlocks.Content allowedBlocks={ALLOWED_BLOCKS} />
+				</div>
+				<button
+					type="button"
+					className={`${BLOCK_CLASS_NAME}__button ${BLOCK_CLASS_NAME}__button_less ${BLOCK_CLASS_NAME}__button_${buttonType}`}
+				>
+					{buttonLessText}
+				</button>
 			</div>
-			<button
-				className={`${BLOCK_CLASS_NAME}__button ${BLOCK_CLASS_NAME}__button_${buttonType}`}
-				type="button"
-			>
-				<span className={`${BLOCK_CLASS_NAME}__more`}>
-					{moreButtonText}
-				</span>
-				<span className={`${BLOCK_CLASS_NAME}__less`}>
-					{lessButtonText}
-				</span>
-			</button>
 		</div>
 	);
 }

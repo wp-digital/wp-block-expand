@@ -7,5 +7,10 @@
 	"php": ">=7.1",
 	"composer/installers": "^1.9"
   },
-  "description": "Short text with simple CTA to see full text."
+  "description": "Short text with simple CTA to see full text.",
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  }
 }
