@@ -1,6 +1,8 @@
 import {
 	useBlockProps,
 	InspectorControls,
+	BlockControls,
+	AlignmentToolbar,
 	RichText,
 	InnerBlocks,
 } from '@wordpress/block-editor';
@@ -17,6 +19,7 @@ import { __ } from '@wordpress/i18n';
 
 import { BLOCK_CLASS_NAME } from './constants';
 import {
+	INTRO_ALIGNMENT_DEFAULT,
 	BUTTON_TYPE_BUTTON,
 	BUTTON_TYPE_LINK,
 	BUTTON_TYPE_DEFAULT,
@@ -37,6 +40,7 @@ export default function Edit({
 }) {
 	const {
 		intro,
+		introAlignment = INTRO_ALIGNMENT_DEFAULT,
 		buttonType = BUTTON_TYPE_DEFAULT,
 		buttonMoreText = BUTTON_MORE_TEXT_DEFAULT,
 		buttonLessText = BUTTON_LESS_TEXT_DEFAULT,
@@ -49,6 +53,7 @@ export default function Edit({
 	};
 
 	const onIntroChange = (value) => onChange('intro', value);
+	const onIntroAlignmentChange = (value) => onChange('introAlignment', value);
 	const onButtonTypeChange = (value) => onChange('buttonType', value);
 	const onButtonMoreTextChange = (value) => onChange('buttonMoreText', value);
 	const onButtonLessTextChange = (value) => onChange('buttonLessText', value);
@@ -69,6 +74,12 @@ export default function Edit({
 
 	if (hasFadeout) {
 		className += ` ${BLOCK_CLASS_NAME}_has-fadeout`;
+	}
+
+	let introClassName = `${BLOCK_CLASS_NAME}__intro`;
+
+	if (introClassName !== 'none') {
+		introClassName += ` ${BLOCK_CLASS_NAME}__intro_${introAlignment}`;
 	}
 
 	return (
@@ -110,13 +121,19 @@ export default function Edit({
 					)}
 				</PanelBody>
 			</InspectorControls>
+			<BlockControls>
+				<AlignmentToolbar
+					value={introAlignment}
+					onChange={onIntroAlignmentChange}
+				/>
+			</BlockControls>
 			<RichText
 				tagName="div"
 				multiline="p"
 				value={intro}
 				placeholder={__('Intro', 'innocode-blocks')}
 				onChange={onIntroChange}
-				className={`${BLOCK_CLASS_NAME}__intro`}
+				className={introClassName}
 				style={{ '--fadeout-height': `${fadeoutHeight}px` }}
 			/>
 			<div className={`${BLOCK_CLASS_NAME}__main`}>

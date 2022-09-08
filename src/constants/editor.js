@@ -1,6 +1,11 @@
 import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 
+export const INTRO_ALIGNMENT_DEFAULT = applyFilters(
+	'innocode.block-expand.intro_alignment.default',
+	'none'
+);
+
 export const BUTTON_TYPE_BUTTON = 'button';
 export const BUTTON_TYPE_LINK = 'link';
 export const BUTTON_TYPE_DEFAULT = applyFilters(

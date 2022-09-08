@@ -2,6 +2,7 @@ import { RichText, useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 
 import { BLOCK_CLASS_NAME } from './constants';
 import {
+	INTRO_ALIGNMENT_DEFAULT,
 	BUTTON_TYPE_DEFAULT,
 	BUTTON_MORE_TEXT_DEFAULT,
 	BUTTON_LESS_TEXT_DEFAULT,
@@ -13,6 +14,7 @@ import {
 export default function save({ attributes }) {
 	const {
 		intro,
+		introAlignment = INTRO_ALIGNMENT_DEFAULT,
 		buttonType = BUTTON_TYPE_DEFAULT,
 		buttonMoreText = BUTTON_MORE_TEXT_DEFAULT,
 		buttonLessText = BUTTON_LESS_TEXT_DEFAULT,
@@ -26,13 +28,19 @@ export default function save({ attributes }) {
 		className += ` ${BLOCK_CLASS_NAME}_has-fadeout`;
 	}
 
+	let introClassName = `${BLOCK_CLASS_NAME}__intro`;
+
+	if (introClassName !== 'none') {
+		introClassName += ` ${BLOCK_CLASS_NAME}__intro_${introAlignment}`;
+	}
+
 	return (
 		<div {...useBlockProps.save({ className })}>
 			<RichText.Content
 				tagName="div"
 				multiline="p"
 				value={intro}
-				className={`${BLOCK_CLASS_NAME}__intro`}
+				className={introClassName}
 				style={{ '--fadeout-height': `${fadeoutHeight}px` }}
 			/>
 			<div className={`${BLOCK_CLASS_NAME}__main`}>

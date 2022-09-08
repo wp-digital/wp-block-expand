@@ -1,5 +1,6 @@
 import { BLOCK_CLASS_NAME } from './constants';
 import {
+	INTRO_ALIGNMENT_DEFAULT,
 	BUTTON_TYPE_BUTTON,
 	BUTTON_TYPE_LINK,
 	BUTTON_TYPE_DEFAULT,
@@ -14,6 +15,10 @@ export default {
 		type: 'string',
 		source: 'html',
 		selector: `.${BLOCK_CLASS_NAME}__intro`,
+	},
+	introAlignment: {
+		type: 'string',
+		default: INTRO_ALIGNMENT_DEFAULT,
 	},
 	buttonType: {
 		type: 'string',
