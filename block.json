@@ -1,7 +1,7 @@
 {
   "apiVersion": 2,
   "name": "innocode/block-expand",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "title": "Expandable",
   "category": "design",
   "description": "Short text with simple CTA to see full text.",
