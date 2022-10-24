@@ -17,4 +17,38 @@
 			display: inline-block;
 		}
 	}
+
+	&__help {
+		position: absolute;
+		top: -5px;
+		right: -5px;
+		bottom: -5px;
+		left: -5px;
+		border-radius: 2px;
+		box-shadow: 0 0 0 2px #e0e0e0;
+	}
+
+	&__help-text {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		background: #e0e0e0;
+		padding: 0 0.5em;
+		font-size: 0.75em;
+		font-weight: 500;
+		color: #757575;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		white-space: nowrap;
+
+		&_top {
+			bottom: 100%;
+			border-radius: 2px 2px 0 0;
+		}
+
+		&_bottom {
+			top: 100%;
+			border-radius: 0 0 2px 2px;
+		}
+	}
 }

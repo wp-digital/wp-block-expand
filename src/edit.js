@@ -30,6 +30,8 @@ import {
 	ALLOWED_BLOCKS,
 } from './constants/editor';
 
+import Help from './Help';
+
 import './editor.scss';
 
 export default function Edit({
@@ -127,15 +129,22 @@ export default function Edit({
 					onChange={onIntroAlignmentChange}
 				/>
 			</BlockControls>
-			<RichText
-				tagName="div"
-				multiline="p"
-				value={intro}
-				placeholder={__('Intro', 'innocode-blocks')}
-				onChange={onIntroChange}
-				className={introClassName}
-				style={{ '--fadeout-height': `${fadeoutHeight}px` }}
-			/>
+			<div className={`${BLOCK_CLASS_NAME}__header`}>
+				{isOpened && (
+					<Help position="bottom">
+						{__('Intro', 'innocode-blocks')}
+					</Help>
+				)}
+				<RichText
+					tagName="div"
+					multiline="p"
+					value={intro}
+					placeholder={__('Intro', 'innocode-blocks')}
+					onChange={onIntroChange}
+					className={introClassName}
+					style={{ '--fadeout-height': `${fadeoutHeight}px` }}
+				/>
+			</div>
 			<div className={`${BLOCK_CLASS_NAME}__main`}>
 				<RichText
 					tagName="button"
@@ -147,6 +156,7 @@ export default function Edit({
 				{isOpened && (
 					<>
 						<div className={`${BLOCK_CLASS_NAME}__content`}>
+							<Help>{__('Content', 'innocode-blocks')}</Help>
 							<InnerBlocks allowedBlocks={ALLOWED_BLOCKS} />
 						</div>
 						<RichText

@@ -30,6 +30,10 @@
 		}
 	}
 
+	&__header {
+		position: relative;
+	}
+
 	&__intro {
 
 		&_left {
@@ -46,6 +50,7 @@
 	}
 
 	&__button {
+		margin: 1em 0;
 		cursor: pointer;
 
 		&_link {
@@ -58,5 +63,9 @@
 			text-decoration-thickness: 1px;
 			text-underline-offset: 0.25ch;
 		}
+	}
+
+	&__content {
+		position: relative;
 	}
 }

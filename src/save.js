@@ -36,13 +36,15 @@ export default function save({ attributes }) {
 
 	return (
 		<div {...useBlockProps.save({ className })}>
-			<RichText.Content
-				tagName="div"
-				multiline="p"
-				value={intro}
-				className={introClassName}
-				style={{ '--fadeout-height': `${fadeoutHeight}px` }}
-			/>
+			<div className={`${BLOCK_CLASS_NAME}__header`}>
+				<RichText.Content
+					tagName="div"
+					multiline="p"
+					value={intro}
+					className={introClassName}
+					style={{ '--fadeout-height': `${fadeoutHeight}px` }}
+				/>
+			</div>
 			<div className={`${BLOCK_CLASS_NAME}__main`}>
 				<button
 					type="button"
