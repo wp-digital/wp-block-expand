@@ -1,16 +1,16 @@
 {
-  "apiVersion": 2,
-  "name": "innocode/block-expand",
-  "version": "1.1.1",
-  "title": "Expandable",
-  "category": "design",
-  "description": "Short text with simple CTA to see full text.",
-  "supports": {
-	"html": false
-  },
-  "textdomain": "innocode-blocks",
-  "editorScript": "file:./build/index.js",
-  "script": "file:./build/view.js",
-  "editorStyle": "file:./build/index.css",
-  "style": "file:./build/style-index.css"
+	"apiVersion": 2,
+	"name": "wpd/block-expand",
+	"version": "1.2.0",
+	"title": "Expandable",
+	"category": "design",
+	"description": "Short text with simple CTA to see full text.",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "wpd-blocks",
+	"editorScript": "file:./build/index.js",
+	"script": "file:./build/view.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
 }

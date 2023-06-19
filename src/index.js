@@ -7,7 +7,7 @@ import icon from './icon';
 
 import './style.scss';
 
-registerBlockType('innocode/block-expand', {
+registerBlockType('wpd/block-expand', {
 	apiVersion: 2,
 	supports: {
 		align: true,

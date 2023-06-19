@@ -66,7 +66,7 @@ export default function Edit({
 	const isParentOfSelectedBlock = useSelect(
 		(select) =>
 			select('core/block-editor').hasSelectedInnerBlock(clientId, true),
-		[]
+		[clientId]
 	);
 	const isOpened = isSelected || isParentOfSelectedBlock;
 
@@ -87,18 +87,18 @@ export default function Edit({
 	return (
 		<div {...useBlockProps({ className })}>
 			<InspectorControls>
-				<PanelBody title={__('Settings', 'innocode-blocks')}>
+				<PanelBody title={__('Settings', 'wpd-blocks')}>
 					<PanelRow>
 						<RadioControl
-							label={__('Button type', 'innocode-blocks')}
+							label={__('Button type', 'wpd-blocks')}
 							selected={buttonType}
 							options={[
 								{
-									label: __('Link', 'innocode-blocks'),
+									label: __('Link', 'wpd-blocks'),
 									value: BUTTON_TYPE_LINK,
 								},
 								{
-									label: __('Button', 'innocode-blocks'),
+									label: __('Button', 'wpd-blocks'),
 									value: BUTTON_TYPE_BUTTON,
 								},
 							]}
@@ -107,7 +107,7 @@ export default function Edit({
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Use fadeout effect', 'innocode-blocks')}
+							label={__('Use fadeout effect', 'wpd-blocks')}
 							checked={hasFadeout}
 							onChange={onHasFadeoutChange}
 						/>
@@ -115,7 +115,7 @@ export default function Edit({
 					{hasFadeout && (
 						<PanelRow>
 							<NumberControl
-								label={__('Fadeout height', 'innocode-blocks')}
+								label={__('Fadeout height', 'wpd-blocks')}
 								value={fadeoutHeight}
 								onChange={onFadeoutHeightChange}
 							/>
@@ -131,15 +131,13 @@ export default function Edit({
 			</BlockControls>
 			<div className={`${BLOCK_CLASS_NAME}__header`}>
 				{isOpened && (
-					<Help position="bottom">
-						{__('Intro', 'innocode-blocks')}
-					</Help>
+					<Help position="bottom">{__('Intro', 'wpd-blocks')}</Help>
 				)}
 				<RichText
 					tagName="div"
 					multiline="p"
 					value={intro}
-					placeholder={__('Intro', 'innocode-blocks')}
+					placeholder={__('Intro', 'wpd-blocks')}
 					onChange={onIntroChange}
 					className={introClassName}
 					style={{ '--fadeout-height': `${fadeoutHeight}px` }}
@@ -156,7 +154,7 @@ export default function Edit({
 				{isOpened && (
 					<>
 						<div className={`${BLOCK_CLASS_NAME}__content`}>
-							<Help>{__('Content', 'innocode-blocks')}</Help>
+							<Help>{__('Content', 'wpd-blocks')}</Help>
 							<InnerBlocks allowedBlocks={ALLOWED_BLOCKS} />
 						</div>
 						<RichText

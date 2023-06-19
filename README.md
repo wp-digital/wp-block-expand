@@ -6,21 +6,21 @@ Short text with simple CTA to see full text.
 
 ### Demo
 
-[Expandable Block](https://blocks.innocode.digital/expandable-block/)
+[Expandable Block](https://demo.wpd.digital/expandable-block/)
 
 ### Install
 
 - Preferable way is to use [Composer](https://getcomposer.org/):
 
     ````
-    composer require innocode-digital/wp-block-expand
+    composer require wpd-digital/wp-block-expand
     ````
 
 - Alternate way is to clone this repo to `wp-content/plugins/`:
 
     ````
     cd wp-content/plugins/
-    git clone git@github.com:innocode-digital/wp-block-expand.git
+    git clone git@github.com:wpd-digital/wp-block-expand.git
     ````
 
 Activate **Expandable Block** with [WP-CLI](https://make.wordpress.org/cli/handbook/)
