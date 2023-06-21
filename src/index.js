@@ -1,4 +1,5 @@
 import { registerBlockType } from '@wordpress/blocks';
+import { __, sprintf } from '@wordpress/i18n';
 
 import Edit from './edit';
 import save from './save';
@@ -17,4 +18,14 @@ registerBlockType('wpd/block-expand', {
 	edit: Edit,
 	save,
 	icon,
+	example: {
+		attributes: {
+			intro: sprintf(
+				'<p>%s</p>',
+				__('This is an example of the Expand block.', 'wpd-blocks')
+			),
+			hasFadeout: true,
+			fadeoutHeight: 30,
+		},
+	},
 });
